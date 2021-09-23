@@ -2,6 +2,9 @@
 
 #include <string>
 #include <optional>
+#include <iostream>
+#include <fstream>
+
 
 struct Person
 {
@@ -10,7 +13,6 @@ struct Person
 	std::optional <std::string> third_name;
 };
 
-inline bool operator ==(const Person& lhv, const Person& rhv)
-{
-	return std::tie(lhv.first_name, lhv.second_name, lhv.third_name) == std::tie(rhv.first_name, rhv.second_name, rhv.third_name);
-}
+bool operator < (const Person& lhv, const Person& rhv);
+bool operator ==(const Person& lhv, const Person& rhv);
+std::ostream& operator << (std::ostream& out, const Person& person);
