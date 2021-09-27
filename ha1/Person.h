@@ -16,3 +16,5 @@ struct Person
 bool operator < (const Person& lhv, const Person& rhv);
 bool operator ==(const Person& lhv, const Person& rhv);
 std::ostream& operator << (std::ostream& out, const Person& person);
+std::ofstream& operator << (std::ofstream& out, const Person& person);
+std::ifstream& operator >> (std::ifstream& in, Person& phone);

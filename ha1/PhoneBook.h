@@ -12,12 +12,18 @@
 class PhoneBook
 {
 public:
+	PhoneBook(); // to write initial settings
 	explicit PhoneBook(std::ifstream& in);
+
 	void SortByName();
 	void SortByPhone();
 	std::tuple<std::string, PhoneNumber> GetPhoneNumber(const std::string& second_name) const;
 	void ChangePhoneNumber(const Person& person, PhoneNumber&& phone_number);
+
 	friend std::ostream& operator << (std::ostream&, const PhoneBook&);
+	friend std::ofstream& operator << (std::ofstream& out, const PhoneBook& book);
+
+	void AddRecord(Person&& person, PhoneNumber&& phone);
 
 private:
 	using Container = std::vector<std::pair<Person, PhoneNumber>>;
@@ -26,3 +32,4 @@ private:
 };
 
 std::ostream& operator << (std::ostream& out, const PhoneBook& book);
+std::ofstream& operator << (std::ofstream& out, const PhoneBook& book);

@@ -3,9 +3,32 @@
 #include <algorithm>
 
 
+PhoneBook::PhoneBook()
+{
+}
+
 PhoneBook::PhoneBook(std::ifstream& in)
 {
+	int size{};
+	try
+	{
+		std::string size_str;
+		std::getline(in, size_str);
+		size = std::stoi(size_str);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Can't read size, book is empty. Error: " << e.what() << std::endl;
+		return;
+	}
 
+	for (int i = 0; i < size; ++i)
+	{
+		Person person;
+		PhoneNumber phone;
+		in >> person >> phone;
+		AddRecord(std::move(person), std::move(phone));
+	}
 }
 
 void PhoneBook::SortByName()
@@ -24,13 +47,13 @@ void PhoneBook::SortByPhone()
 		});
 }
 
-std::tuple<std::string, PhoneNumber> PhoneBook::GetPhoneNumber(const std::string& second_name) const
+std::tuple<std::string, PhoneNumber> PhoneBook::GetPhoneNumber(const std::string& first_name) const
 {
 	int count = 0;
 	PhoneNumber seeked_number;
-	std::for_each(std::begin(m_container), std::end(m_container), [second_name, &seeked_number, &count](const auto& record)
+	std::for_each(std::begin(m_container), std::end(m_container), [first_name, &seeked_number, &count](const auto& record)
 		{
-			if (record.first.second_name == second_name)
+			if (record.first.first_name == first_name)
 			{
 				++count;
 				if (count == 1)
@@ -55,11 +78,22 @@ void PhoneBook::ChangePhoneNumber(const Person& person, PhoneNumber&& phone_numb
 		it->second = std::move(phone_number);
 }
 
+void PhoneBook::AddRecord(Person&& person, PhoneNumber&& phone)
+{
+	m_container.emplace_back(person, phone);
+}
+
 std::ostream& operator << (std::ostream& out, const PhoneBook& book)
 {
 	for (const auto& [person, phone_number] : book.m_container)
-	{
-		out << person << " " << phone_number << std::endl;
-	}
+		out << person << "    " << phone_number << std::endl;
+	return out;
+}
+
+std::ofstream& operator << (std::ofstream& out, const PhoneBook& book)
+{
+	out << book.m_container.size() << std::endl;
+	for (const auto& [person, phone] : book.m_container)
+		out << person << phone;
 	return out;
 }
