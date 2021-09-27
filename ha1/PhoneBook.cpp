@@ -35,7 +35,7 @@ void PhoneBook::SortByName()
 {
 	std::sort(std::begin(m_container), std::end(m_container), [](const auto& lhv, const auto& rhv)
 		{
-			return lhv.first < rhv.first;
+			return *lhv.first < *rhv.first;
 		});
 }
 
@@ -43,7 +43,7 @@ void PhoneBook::SortByPhone()
 {
 	std::sort(std::begin(m_container), std::end(m_container), [](const auto& lhv, const auto& rhv)
 		{
-			return lhv.second < rhv.second;
+			return *lhv.second < *rhv.second;
 		});
 }
 
@@ -53,11 +53,11 @@ std::tuple<std::string, PhoneNumber> PhoneBook::GetPhoneNumber(const std::string
 	PhoneNumber seeked_number;
 	std::for_each(std::begin(m_container), std::end(m_container), [first_name, &seeked_number, &count](const auto& record)
 		{
-			if (record.first.first_name == first_name)
+			if (record.first->first_name == first_name)
 			{
 				++count;
 				if (count == 1)
-					seeked_number = record.second;
+					seeked_number = *record.second;
 			}
 		});
 	if (count > 1)
@@ -72,21 +72,21 @@ void PhoneBook::ChangePhoneNumber(const Person& person, PhoneNumber&& phone_numb
 {
 	const auto it = std::find_if(std::begin(m_container), std::end(m_container), [&person](const auto& record)
 		{
-			return record.first == person;
+			return *record.first == person;
 		});
 	if (it != std::end(m_container))
-		it->second = std::move(phone_number);
+		*it->second = std::move(phone_number);
 }
 
 void PhoneBook::AddRecord(Person&& person, PhoneNumber&& phone)
 {
-	m_container.emplace_back(person, phone);
+	m_container.push_back({ std::make_unique<Person>(person), std::make_unique<PhoneNumber>(phone) });
 }
 
 std::ostream& operator << (std::ostream& out, const PhoneBook& book)
 {
 	for (const auto& [person, phone_number] : book.m_container)
-		out << person << "    " << phone_number << std::endl;
+		out << *person << "    " << *phone_number << std::endl;
 	return out;
 }
 
@@ -94,6 +94,6 @@ std::ofstream& operator << (std::ofstream& out, const PhoneBook& book)
 {
 	out << book.m_container.size() << std::endl;
 	for (const auto& [person, phone] : book.m_container)
-		out << person << phone;
+		out << *person << *phone;
 	return out;
 }

@@ -26,7 +26,7 @@ public:
 	void AddRecord(Person&& person, PhoneNumber&& phone);
 
 private:
-	using Container = std::vector<std::pair<Person, PhoneNumber>>;
+	using Container = std::vector<std::pair<std::unique_ptr<Person>, std::unique_ptr<PhoneNumber>>>;
 	Container m_container;
 
 };
