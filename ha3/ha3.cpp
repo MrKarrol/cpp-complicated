@@ -3,6 +3,7 @@
 #include <random>
 
 #include "matrix.h"
+#include "iterator.h"
 
 
 void AddRealAverage(std::list<double>& list)
@@ -67,6 +68,15 @@ int main()
 		{
 			std::cerr << "ERROR!! " << e.what() << std::endl;
 		}
+	}
+	// task 3
+	{
+		std::cout << "******* TASK 2 *******" << std::endl;
+
+		Container container{ 3, 5, -2, -3, -18, -32, 5, 666, 3 };
+		for (const auto& item : container)
+			std::cout << item << " ";
+		std::cout << std::endl;
 	}
 	return 0;
 }
