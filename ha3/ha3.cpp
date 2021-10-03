@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <list>
 #include <random>
+#include <numeric>
+#include <algorithm>
 
 #include "matrix.h"
 #include "iterator.h"
@@ -8,10 +10,15 @@
 
 void AddRealAverage(std::list<double>& list)
 {
-	double average = 0;
+	double average = std::accumulate(std::begin(list), std::end(list), 0.f) /  list.size();
+	list.push_back(average);
+}
+
+std::ostream& operator << (std::ostream& out, const std::list<double>& list)
+{
 	for (const auto& item : list)
-		average += item;
-	list.push_back(average / list.size());
+		out << item << " ";
+	return out;
 }
 
 
@@ -23,23 +30,14 @@ int main()
 		std::random_device rd;
 		std::mt19937 gen(rd());
 		std::uniform_real_distribution<double> urd(0, 100);
+
 		const auto size = static_cast<int>(urd(gen));
-		std::list<double> list;
-		for (int i = 0; i < size; ++i)
-			list.push_back(urd(gen));
-		// before
-		std::cout << "before" << std::endl;
-		for (const auto& item : list)
-			std::cout << item << " ";
-		std::cout << std::endl;
+		std::list<double> list(size);
+		std::generate(std::begin(list), std::end(list), [&urd, &gen]() {return urd(gen); });
 
+		std::cout << "before" << std::endl << list << std::endl;
 		AddRealAverage(list);
-
-		// after
-		std::cout << "after" << std::endl;
-		for (const auto& item : list)
-			std::cout << item << " ";
-		std::cout << std::endl;
+		std::cout << "after" << std::endl << list << std::endl;
 	}
 	// task 2
 	{

@@ -12,8 +12,8 @@ public:
 	Matrix(uint8_t side, std::vector<int>&& data);
 
 	int GetDeterminant() const;
-	Matrix GetMinor(uint8_t x, uint8_t y) const;
-	int Get(uint8_t x, uint8_t y) const;
+	Matrix GetMinor(uint8_t row, uint8_t col) const;
+	int Get(uint8_t row, uint8_t col) const;
 	uint8_t GetSide() const noexcept;
 
 	friend std::ostream& operator << (std::ostream& out, const Matrix& matrix);

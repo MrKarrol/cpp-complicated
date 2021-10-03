@@ -23,12 +23,12 @@ Matrix::Matrix(uint8_t side, std::vector<int>&& data)
 		throw std::invalid_argument("matrix is not square");
 }
 
-int Matrix::Get(uint8_t x, uint8_t y) const
+int Matrix::Get(uint8_t row, uint8_t col) const
 {
-	if (x >= m_side || y >= m_side)
+	if (row >= m_side || col >= m_side)
 		throw std::invalid_argument("matrix coords are invalid");
 
-	return m_matrix.at(static_cast<uint32_t>(x) * m_side + y);
+	return m_matrix.at(static_cast<uint32_t>(row) * m_side + col);
 }
 
 uint8_t Matrix::GetSide() const noexcept
@@ -42,10 +42,10 @@ int Matrix::GetDeterminant() const
 		return Get(0, 0) * Get(1, 1) - Get(0, 1) * Get(1, 0);
 
 	int determinant = 0;
-	for (int i = 0; i < m_side; ++i)
+	for (int col = 0; col < m_side; ++col)
 	{
-		const int base = Get(0, i) * (i % 2 == 0 ? 1 : -1);
-		determinant += base * GetMinor(0, i).GetDeterminant();
+		const int base = Get(0, col) * (col % 2 == 0 ? 1 : -1);
+		determinant += base * GetMinor(0, col).GetDeterminant();
 	}
 	return determinant;
 }
