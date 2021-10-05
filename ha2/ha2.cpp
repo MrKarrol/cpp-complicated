@@ -24,6 +24,7 @@ namespace task2
 
 int main()
 {
+	std::setlocale(LC_ALL, "Russian");
 	// check Swap
 	{
 		struct Temp
@@ -72,7 +73,7 @@ int main()
 	}
 	// check counts
 	{
-		task3::main("./../../../../../volume1.txt");
+		Calculate("./../../../../../volume1.txt");
 	}
 	return 0;
 }
