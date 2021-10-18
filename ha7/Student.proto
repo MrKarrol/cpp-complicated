@@ -1,0 +1,10 @@
+syntax="proto3";
+
+import "FullName.proto";
+
+package protobuf;
+message Student{
+    FullName name = 1;
+    repeated int32 grades = 2;
+    float average = 3;
+}

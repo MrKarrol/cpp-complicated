@@ -1,0 +1,3 @@
+out
+*.lib
+protoc.exe
