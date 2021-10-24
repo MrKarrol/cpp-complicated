@@ -14,6 +14,7 @@ struct PhoneNumber
 	std::optional<int> additional_number;
 };
 
+bool operator ==(const PhoneNumber& lhv, const PhoneNumber& rhv);
 std::ostream& operator << (std::ostream& out, const PhoneNumber& phone_number);
 bool operator < (const PhoneNumber& lhv, const PhoneNumber& rhv);
 std::ofstream& operator << (std::ofstream& out, const PhoneNumber& phone);

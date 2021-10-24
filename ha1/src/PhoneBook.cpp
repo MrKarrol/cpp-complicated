@@ -83,6 +83,11 @@ void PhoneBook::AddRecord(Person&& person, PhoneNumber&& phone)
 	m_container.push_back({ std::make_unique<Person>(person), std::make_unique<PhoneNumber>(phone) });
 }
 
+void PhoneBook::AddRecord(const Person& person, const PhoneNumber& phone)
+{
+	m_container.push_back({ std::make_unique<Person>(person), std::make_unique<PhoneNumber>(phone) });
+}
+
 std::ostream& operator << (std::ostream& out, const PhoneBook& book)
 {
 	for (const auto& [person, phone_number] : book.m_container)

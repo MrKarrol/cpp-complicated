@@ -1,11 +1,11 @@
-﻿# CMakeList.txt : CMake project for ha1, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8)
+project(ha1)
+
 set(CMAKE_CXX_STANDARD 20)
-project ("ha1")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
-# Add source to this project's executable.
-add_executable (ha1 "ha1.cpp"  "Person.h" "Person.cpp" "PhoneNumber.cpp" "PhoneNumber.h" "PhoneBook.cpp" "PhoneBook.h")
+include_directories(src)
 
-# TODO: Add tests and install targets if needed.
+add_subdirectory(src)
+add_subdirectory(tests)
+add_subdirectory(libs/googletest)

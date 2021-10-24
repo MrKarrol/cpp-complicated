@@ -3,6 +3,11 @@
 #include <sstream>
 #include <iomanip>
 
+bool operator ==(const PhoneNumber& lhv, const PhoneNumber& rhv)
+{
+	return std::tie(lhv.country_code, lhv.city_code, lhv.number, lhv.additional_number)
+		== std::tie(rhv.country_code, rhv.city_code, rhv.number, rhv.additional_number);
+}
 
 std::ostream& operator << (std::ostream& out, const PhoneNumber& phone_number)
 {
@@ -14,8 +19,10 @@ std::ostream& operator << (std::ostream& out, const PhoneNumber& phone_number)
 
 bool operator < (const PhoneNumber& lhv, const PhoneNumber& rhv)
 {
-	return std::tie(lhv.country_code, lhv.city_code, lhv.number, lhv.additional_number)
-		< std::tie(rhv.country_code, rhv.city_code, rhv.number, rhv.additional_number);
+	const auto lhv_number = std::stoi(lhv.number);
+	const auto rhv_number = std::stoi(rhv.number);
+	return std::tie(lhv.country_code, lhv.city_code, lhv_number, lhv.additional_number)
+		< std::tie(rhv.country_code, rhv.city_code, rhv_number, rhv.additional_number);
 }
 
 std::ofstream& operator << (std::ofstream& out, const PhoneNumber& phone_number)

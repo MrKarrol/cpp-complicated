@@ -1,0 +1,6 @@
+[submodule "ha1/tests/unitTests/googletest"]
+	path = ha1/tests/unitTests/googletest
+	url = https://github.com/google/googletest.git
+[submodule "ha1/libs/googletest"]
+	path = ha1/libs/googletest
+	url = https://github.com/google/googletest.git

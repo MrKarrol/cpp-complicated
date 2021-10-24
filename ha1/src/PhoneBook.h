@@ -24,6 +24,7 @@ public:
 	friend std::ofstream& operator << (std::ofstream& out, const PhoneBook& book);
 
 	void AddRecord(Person&& person, PhoneNumber&& phone);
+	void AddRecord(const Person& person, const PhoneNumber& phone);
 
 private:
 	using Container = std::vector<std::pair<std::unique_ptr<Person>, std::unique_ptr<PhoneNumber>>>;
